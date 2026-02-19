@@ -12,25 +12,20 @@ class Expenditure {
         this.type = type;
         this.amount = amount;
     }
+
+    toString() {
+        return `${this.dateSet}-${this.type}-${this.amount}`;
+    }
 };
 
 function exportExpenditures(expenses) {
-    const jsonArr = [];
-    for (let i = 0; i < expenses.length; i++) {
-        jsonArr.push(JSON.stringify(expenses[i]));
-    }
-    return jsonArr;
-};
+    return JSON.stringify(expenses);
+}
 
-function importExpenditures(file) {
-    try {
-        const fr = new FileReader();
-        const json = fr.readAsText(file);
-        return JSON.parse(json);
-    } catch(e) {
-        logError(e)
-    }
-};
+async function importExpenditures(file) {
+    const text = await file.text();
+    return JSON.parse(text);
+}
 
 // Mozilla has non-standard features that make errors better, so im compiling 
 // all the platform specific ways to log errors here to avoid platform issues
@@ -49,8 +44,9 @@ function logError(e) {
     console.log(err)
 }
 
-function assert(condition, msg) {
-    const result = typeof condition === "function" ? condition() : condition;
+async function assert(condition, msg) {
+    const result = typeof condition === "function" 
+        ? await condition() : condition;
 
     if (!result) {
         logError(new Error(msg, {}));
@@ -62,17 +58,33 @@ function assert(condition, msg) {
 function test() {
     assert(() => {
         const testObject = new Expenditure(Date.now(), ExpenditureType.RENT, 900.0);
-        const jsonOutput = JSON.parse(exportExpenditures([testObject]));
-        const resultObject = new Expenditure(jsonOutput.dateSet, jsonOutput.type, jsonOutput.amount);
+
+        const jsonOutput = JSON.parse(exportExpenditures([testObject]))[0];
+
+        const resultObject = new Expenditure(
+            jsonOutput.dateSet,
+            jsonOutput.type,
+            jsonOutput.amount
+        );
+
         return resultObject.toString() === testObject.toString();
     }, "exportExpenditures is broken halp");
 
-    // assert(() => {
-    //     const testObject = new Expenditure(Date.now(), ExpenditureType.RENT, 900.0);
-    //     const jsonOutput = importExpenditures(new Blob(exportExpenditures([testObject])));
-    //     const resultObject = new Expenditure(jsonOutput[0], jsonOutput[1], jsonOutput[2]);
-    //     return testObject.toString() == resultObject.toString();
-    // }, "importExpenditures is broken halp")
+    assert(async () => {
+        const testObject = new Expenditure(Date.now(), ExpenditureType.RENT, 900.0);
+
+        const blob = new Blob ([exportExpenditures([testObject])]);
+
+        const jsonOutput = await importExpenditures(blob);
+
+        const resultObject = new Expenditure(
+            jsonOutput[0].dateSet,
+            jsonOutput[0].type,
+            jsonOutput[0].amount
+        );
+
+        return testObject.toString() == resultObject.toString();
+    }, "importExpenditures is broken halp")
 }
 
 document.addEventListener("DOMContentLoaded", test);
