@@ -1,10 +1,11 @@
 //TODO: move stuff out into own files -Lena
 
-const ExpenditureType = {
-    RENT: "Rent",
-    GROCERIES: "Groceries",
+const ExpenditureType = Object.freeze([
+    {id: 0, Key: "RENT",      Label: "Rent"},
+    {id: 1, Key: "GROCERIES", Label: "Groceries"},
+    {id: 2, Key: "UTILITIES", Label: "Utilities"}
     // .... and so on
-};
+]);
 
 class Expenditure {
     constructor(date, type, amount) {
@@ -88,3 +89,18 @@ function test() {
 }
 
 document.addEventListener("DOMContentLoaded", test);
+
+
+const toggleBtn = document.getElementById("toggleBtn");
+const container = document.querySelector(".container");
+
+toggleBtn.addEventListener("click", function() {
+
+    container.classList.toggle("collapsed");
+
+    if (container.classList.contains("collapsed")) {
+        toggleBtn.textContent = "Show ➜";
+    } else {
+        toggleBtn.textContent = "Hide ➜";
+    }
+});
