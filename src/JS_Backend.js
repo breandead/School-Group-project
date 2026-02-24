@@ -88,3 +88,18 @@ function test() {
 }
 
 document.addEventListener("DOMContentLoaded", test);
+
+
+const toggleBtn = document.getElementById("toggleBtn");
+const container = document.querySelector(".container");
+
+toggleBtn.addEventListener("click", function() {
+
+    container.classList.toggle("collapsed");
+
+    if (container.classList.contains("collapsed")) {
+        toggleBtn.textContent = "Show ➜";
+    } else {
+        toggleBtn.textContent = "Hide ➜";
+    }
+});
