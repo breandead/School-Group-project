@@ -1,10 +1,11 @@
 //TODO: move stuff out into own files -Lena
 
-const ExpenditureType = {
-    RENT: "Rent",
-    GROCERIES: "Groceries",
+const ExpenditureType = Object.freeze([
+    {id: 0, Key: "RENT",      Label: "Rent"},
+    {id: 1, Key: "GROCERIES", Label: "Groceries"},
+    {id: 2, Key: "UTILITIES", Label: "Utilities"}
     // .... and so on
-};
+]);
 
 class Expenditure {
     constructor(date, type, amount) {
@@ -103,3 +104,33 @@ toggleBtn.addEventListener("click", function() {
         toggleBtn.textContent = "Hide ➜";
     }
 });
+
+//Dynamically fills in the dropdown with expenditureTypes.
+const ExpenseType = document.getElementById("ExpenditureType");
+const CostInput = document.getElementById("Cost");
+const form = document.getElementById("ExpenseForm");
+
+ExpenditureType.forEach(type => {
+    const DropdownOption = document.createElement("option");
+    DropdownOption.textContent = type.Label;
+    ExpenseType.appendChild(DropdownOption);
+});
+
+document.getElementById("ExpenseForm").addEventListener("submit", function(e) {
+    e.preventDefault();   // 🚨 Stops URL change
+    showPopup();          // Call your function instead
+});
+
+function showPopup() {
+    const expenseType = document.getElementById("ExpenditureType").value;
+    const costInput = document.getElementById("Cost").value;
+
+    const cost = parseFloat(costInput);
+
+    if (isNaN(cost) || cost < 0 || !/^\d+(\.\d{1,2})?$/.test(costInput)) {
+        alert("Please enter a valid cost (no negatives, max 2 decimals).");
+        return;
+    }
+
+    alert(`Expense Type: ${expenseType}\nCost: £${cost.toFixed(2)}`);
+}
