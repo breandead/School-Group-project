@@ -1,33 +1,7 @@
-//TODO: move stuff out into own files -Lena
+import { ExpenditureType, Expenditure, exportExpenditures, importExpenditures } from "./expenditures.js"
+import { chartOnLoad } from "./charts.js";
 
-const ExpenditureType = Object.freeze([
-    {id: 0, Key: "RENT",      Label: "Rent"},
-    {id: 1, Key: "GROCERIES", Label: "Groceries"},
-    {id: 2, Key: "UTILITIES", Label: "Utilities"}
-    // .... and so on
-]);
-
-class Expenditure {
-    constructor(date, type, amount) {
-        this.dateSet = date;
-        this.type = type;
-        this.amount = amount;
-    }
-
-    toString() {
-        return `${this.dateSet}-${this.type}-${this.amount}`;
-    }
-};
-
-function exportExpenditures(expenses) {
-    return JSON.stringify(expenses);
-}
-
-async function importExpenditures(file) {
-    const text = await file.text();
-    return JSON.parse(text);
-}
-
+new Chart({});
 // Mozilla has non-standard features that make errors better, so im compiling 
 // all the platform specific ways to log errors here to avoid platform issues
 function logError(e) {
@@ -89,6 +63,7 @@ function test() {
 }
 
 document.addEventListener("DOMContentLoaded", test);
+document.addEventListener("DOMContentLoaded", chartOnLoad);
 
 
 const toggleBtn = document.getElementById("toggleBtn");
