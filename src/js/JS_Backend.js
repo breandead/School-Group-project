@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", chartOnLoad);
 const toggleBtn = document.getElementById("toggleBtn");
 const container = document.querySelector(".container");
 
-toggleBtn.addEventListener("click", function() {
+toggleBtn.addEventListener("click", function () {
 
     container.classList.toggle("collapsed");
 
@@ -78,6 +78,7 @@ toggleBtn.addEventListener("click", function() {
     } else {
         toggleBtn.textContent = "Hide ➜";
     }
+
 });
 
 //Dynamically fills in the dropdown with expenditureTypes.
@@ -91,21 +92,38 @@ ExpenditureType.forEach(type => {
     ExpenseType.appendChild(DropdownOption);
 });
 
-document.getElementById("ExpenseForm").addEventListener("submit", function(e) {
-    e.preventDefault();   // 🚨 Stops URL change
-    showPopup();          // Call your function instead
-});
+const submitBtn = document.querySelector("#ExpenseForm button");
 
-function showPopup() {
+submitBtn.addEventListener("click", function () {
     const expenseType = document.getElementById("ExpenditureType").value;
-    const costInput = document.getElementById("Cost").value;
+    const cost = parseFloat(document.getElementById("Cost").value);
 
-    const cost = parseFloat(costInput);
-
-    if (isNaN(cost) || cost < 0 || !/^\d+(\.\d{1,2})?$/.test(costInput)) {
-        alert("Please enter a valid cost (no negatives, max 2 decimals).");
+    // Validation
+    if (!expenseType) {
+        showToast("Please select an expense type.");
         return;
     }
 
-    alert(`Expense Type: ${expenseType}\nCost: £${cost.toFixed(2)}`);
+    if (!cost || cost <= 0) {
+        showToast("Please enter a cost greater than £0.");
+        return;
+    }
+
+    // If validation passes
+    showToast(`You entered: ${expenseType} - £${cost.toFixed(2)}`);
+});
+
+function showToast(message) {
+    const container = document.getElementById("toast-container");
+
+    const toast = document.createElement("div");
+    toast.classList.add("toast");
+    toast.textContent = message;
+
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        container.removeChild(toast);
+    }, 3000);
 }
+
