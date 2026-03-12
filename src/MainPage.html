@@ -13,8 +13,8 @@
   <nav> <!-- Navigation bar for the user -->
       <ul class="menu">
           <li><a href="MainPage.html" class="active">Home</a></li>
-          <li><a href="Page2.html">Link 2</a></li>
-          <li><a href="Page3.html">Link 3</a></li>
+          <li><a href="Page2.html">Budgeting Tips</a></li>
+          <li><a href="Page3.html">Types Of Budgeting Methods</a></li>
           <li><a href="Page4.html">Link 4</a></li>
       </ul>  
       <h1 class="site-title">Budgeting for Students</h1>
@@ -22,8 +22,15 @@
 </body>
 <body class="MainPage">
   <div id="toast-container"></div>
-  <div class="container">
-      <section> 
+  <div class="containerMain">
+      <section>   
+          <img class= "MainPhoto">
+          <h1>Expense Tracker</h1>
+          <p>
+            Enter your expenses and instantly visualize your spending with a graph.
+            Understand your financial habits and make smarter budgeting decisions.
+          </p>
+          <br><br><br>
         <form id="ExpenseForm">
             <label for="ExpenditureType">Expense Type:</label>
             <select name="Expense" id="ExpenditureType">
@@ -47,64 +54,20 @@
             <button id="toggleBtn">Hide ➜</button>
             <canvas id="chart"></canvas>
       </aside>
-  </div>
+ </div>
+
+  <div>  
+    <footer>
+       <div class="footer-container">
+         <div class="footer-branding">
+           <h2>Budgeting for Students</h2>
+           <p>© 2026 All Rights Reserved</p>
+         </div>
+       </div>
+    </footer>
+   </div>
+
 </body>
 
-<footer>
-    <div class="footer-container">
-      <div class="footer-branding">
-        <h2>Budgeting for Students</h2>
-        <p>© 2026 All Rights Reserved</p>
-      </div>
-  
-      <div class="footer-team">
-        <h3>Our Team</h3>
-        <ul class="team-list">
-          <li>
-            <img src="" alt="NAME" class="team-photo">
-            <div class="team-info">
-              <p class="team-name">NAME</p>
-              <p class="team-role">ROLE</p>
-            </div>
-          </li>
-          <li>
-            <img src="" alt="NAME" class="team-photo">
-            <div class="team-info">
-              <p class="team-name">NAME</p>
-              <p class="team-role">ROLE</p>
-            </div>
-          </li>
-          <li>
-            <img src="" alt="NAME" class="team-photo">
-            <div class="team-info">
-              <p class="team-name">NAME</p>
-              <p class="team-role">ROLE</p>
-            </div>
-          </li>
-          <li>
-            <img src="" alt="NAME" class="team-photo">
-            <div class="team-info">
-              <p class="team-name">NAME</p>
-              <p class="team-role">ROLE</p>
-            </div>
-          </li>
-          <li>
-            <img src="" alt="NAME" class="team-photo">
-            <div class="team-info">
-              <p class="team-name">NAME</p>
-              <p class="team-role">ROLE</p>
-            </div>
-          </li>
-          <li>
-            <img src="" alt="NAME" class="team-photo">
-            <div class="team-info">
-              <p class="team-name">NAME</p>
-              <p class="team-role">ROLE</p>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </footer>
 
 </html>
